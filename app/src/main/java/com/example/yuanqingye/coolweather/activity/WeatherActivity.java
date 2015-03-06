@@ -13,11 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.yuanqingye.coolweather.R;
+import com.example.yuanqingye.coolweather.service.AutoUpdateService;
 import com.example.yuanqingye.coolweather.util.HttpCallbackListener;
 import com.example.yuanqingye.coolweather.util.HttpUtil;
 import com.example.yuanqingye.coolweather.util.Utility;
 
 import org.w3c.dom.Text;
+
+import java.util.TimeZone;
 
 /**
  * Created by yuanqing.ye on 2015/3/4.
@@ -116,6 +119,9 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
         currentDateText.setText(prefs.getString("current_date", ""));
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityNameText.setVisibility(View.VISIBLE);
+
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 
     @Override

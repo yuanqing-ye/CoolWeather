@@ -16,6 +16,8 @@ public class HttpUtil {
             public void run() {
                 HttpURLConnection connection = null;
                 try {
+                    System.setProperty("http.agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) " +
+                            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36");
                     URL url = new URL(address);
                     connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");

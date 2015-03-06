@@ -17,6 +17,7 @@ import java.lang.ref.SoftReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by yuanqing.ye on 2015/3/3.
@@ -107,7 +108,9 @@ public class Utility {
     public static void saveWeatherInfo(Context context, String cityName, String weatherCode,
                                        String temp1, String temp2, String weatherDesp,
                                        String publishTime) {
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
+        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context)
                 .edit();
         editor.putBoolean("city_selected", true);
@@ -116,7 +119,8 @@ public class Utility {
         editor.putString("temp1", temp1);
         editor.putString("temp2", temp2);
         editor.putString("weather_desp", weatherDesp);
-        editor.putString("publish_time", publishTime);
+//        editor.putString("publish_time", publishTime);
+        editor.putString("publish_time", sdf2.format(new Date()));
         editor.putString("current_date", sdf.format(new Date()));
         editor.commit();
     }

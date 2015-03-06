@@ -26,6 +26,7 @@ import com.example.yuanqingye.coolweather.util.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by yuanqing.ye on 2015/3/3.
@@ -50,13 +51,21 @@ public class ChooseAreaActivity extends Activity {
     private City selectedCity;
     private int currentLevel;
 
+    private Boolean isFromWeatherActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
+        TimeZone.setDefault(timeZone);
+
         super.onCreate(savedInstanceState);
 
+        isFromWeatherActivity = getIntent().getBooleanExtra("from_weather_activity", false );
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (!getIntent().getBooleanExtra("from_weather_activity", false
-        ) && prefs.getBoolean("city_selected", false)) {
+
+        if (!isFromWeatherActivity && prefs.getBoolean("city_selected", false)) {
             Intent intent = new Intent(this, WeatherActivity.class);
             startActivity(intent);
             finish();
@@ -235,9 +244,12 @@ public class ChooseAreaActivity extends Activity {
         if (currentLevel == LEVEL_COUNTY) {
             queryCities();
         } else if (currentLevel == LEVEL_CITY) {
-
             queryProvinces();
         } else {
+            if (isFromWeatherActivity) {
+                Intent intent = new Intent(this, WeatherActivity.class);
+                startActivity(intent);
+            }
             finish();
         }
     }
